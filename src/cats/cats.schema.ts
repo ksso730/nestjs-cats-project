@@ -32,7 +32,7 @@ export class Cat extends Document {
 
 export const CatSchema = SchemaFactory.createForClass(Cat);
 
-// 클라이언트에게 보여줄 readOnlyData 필드를 virtual
+// 클라이언트에게 보여줄 readOnlyData 필드를 virtual (password 제외)
 CatSchema.virtual('readOnlyData').get(function (this: Cat) {
   return {
     id: this.id,
