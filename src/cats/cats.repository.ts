@@ -8,6 +8,11 @@ import { Cat } from './cats.schema';
 export class CatsRepository {
   constructor(@InjectModel(Cat.name) private readonly catModel: Model<Cat>) {}
 
+  async findByCatByEmail(email: string): Promise<Cat | null> {
+    const cat = await this.catModel.findOne({ email });
+    return cat;
+  }
+
   async existsByEmail(email: string): Promise<boolean> {
     const result = await this.catModel.exists({ email }); // 존재하지 않으면 null이 반환됨
     return result ? true : false;
