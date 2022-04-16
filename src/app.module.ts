@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { CatsModule } from './cats/cats.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 import * as mongoose from 'mongoose';
 
 @Module({
@@ -17,6 +18,7 @@ import * as mongoose from 'mongoose';
       // useCreateIndex: true,
     }),
     CatsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
