@@ -1,3 +1,4 @@
+import { CurrentUser } from './../common/decorators/user.decorators';
 import { JwtAuthGuard } from './../auth/jwt/jwt.guard';
 import { AuthService } from './../auth/auth.service';
 import { LoginReqeustDto } from './../auth/dto/login.request.dto';
@@ -32,8 +33,9 @@ export class CatsController {
   @ApiOperation({ summary: '현재 고양이 조회' })
   @UseGuards(JwtAuthGuard) // middleware -> guard에서 인증처리후(strategy의 validate수행) request에 전달
   @Get()
-  getCurrentCat(@Req() req: Request) {
-    return req.user;
+  getCurrentCat(@CurrentUser() cat) {
+    // return request.user
+    return cat.readOnlyData;
   }
 
   @ApiResponse({ status: 500, description: 'Server Error...' })
