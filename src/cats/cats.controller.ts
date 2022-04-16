@@ -1,3 +1,4 @@
+import { JwtAuthGuard } from './../auth/jwt/jwt.guard';
 import { AuthService } from './../auth/auth.service';
 import { LoginReqeustDto } from './../auth/dto/login.request.dto';
 import { CatRequestDto } from './dto/cats.request.dto';
@@ -10,11 +11,14 @@ import {
   Get,
   Post,
   Put,
+  Req,
   UseFilters,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ReadOnlyCatDto } from './dto/cat.dto';
+import { Request } from 'express';
 
 @Controller('cats')
 @UseInterceptors(SuccessInterceptor)
@@ -26,9 +30,10 @@ export class CatsController {
   ) {}
 
   @ApiOperation({ summary: '현재 고양이 조회' })
+  @UseGuards(JwtAuthGuard) // middleware -> guard에서 인증처리후(strategy의 validate수행) request에 전달
   @Get()
-  getCurrentCat() {
-    return 'current cat';
+  getCurrentCat(@Req() req: Request) {
+    return req.user;
   }
 
   @ApiResponse({ status: 500, description: 'Server Error...' })

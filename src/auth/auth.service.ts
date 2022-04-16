@@ -14,7 +14,7 @@ export class AuthService {
   async jwtLogin(data: LoginReqeustDto) {
     const { email, password } = data;
 
-    const cat = await this.catsRepository.findByCatByEmail(email);
+    const cat = await this.catsRepository.findCatByEmail(email);
     if (!cat) {
       throw new UnauthorizedException('이메일과 비밀번호를 확인해주세요.');
     }
@@ -28,6 +28,7 @@ export class AuthService {
       throw new UnauthorizedException('이메일과 비밀번호를 확인해주세요.');
     }
 
+    // key-value 형식의 인코딩 데이터
     const payload = { email: email, sub: cat.id };
 
     return {
