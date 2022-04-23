@@ -13,6 +13,7 @@ import {
   Post,
   Put,
   Req,
+  UploadedFiles,
   UseFilters,
   UseGuards,
   UseInterceptors,
@@ -20,6 +21,9 @@ import {
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ReadOnlyCatDto } from './dto/cat.dto';
 import { Request } from 'express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { multerOptions } from 'src/common/utils/multer.options';
+import { Cat } from './cats.schema';
 
 @Controller('cats')
 @UseInterceptors(SuccessInterceptor)
@@ -56,5 +60,19 @@ export class CatsController {
   @Post('logout')
   logOut() {
     return 'logout';
+  }
+
+  // 서버의 static file들을 제공하기 위해 미들웨어 추가
+  @ApiOperation({ summary: '고양이 이미지 업로드' })
+  @UseInterceptors(FilesInterceptor('image', 10, multerOptions('cats')))
+  @Post('upload')
+  uploadCatImg(
+    @UploadedFiles() files: Array<Express.Multer.File>,
+    @CurrentUser() cat: Cat,
+  ) {
+    console.log(files);
+    // return 'uploadImg';
+    // return { image: `http://localhost:8000/media/cats/${files[0].filename}` }; // 프론트엔드에 생성된 파일 제공
+    return this.catsService.uploadImg(cat, files);
   }
 }
