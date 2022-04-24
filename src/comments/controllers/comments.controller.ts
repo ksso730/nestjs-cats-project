@@ -21,4 +21,10 @@ export class CommentsController {
   ) {
     return this.commentsService.createComments(id, body);
   }
+
+  @ApiOperation({ summary: '좋아요 수 올리기' })
+  @Post(':id')
+  async plusLike(@Param('id') id: string) {
+    return this.commentsService.plusLike(id);
+  }
 }

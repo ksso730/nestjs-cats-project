@@ -9,4 +9,7 @@ export class CommentsService {
   async createComments(id: string, comments: CommentsCreateDto) {
     return 'hello world';
   }
+  async plusLike(id: string) {
+    return 'hello world';
+  }
 }
