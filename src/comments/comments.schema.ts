@@ -36,7 +36,7 @@ export class Comments extends Document {
   @Prop({ default: 0 })
   @IsPositive()
   @IsNotEmpty()
-  likeCount: string;
+  likeCount: number;
 
   @ApiProperty({
     description: '작성 대상 (게시물,정보글)',
@@ -51,4 +51,4 @@ export class Comments extends Document {
   profile: Types.ObjectId;
 }
 
-export const CatSchema = SchemaFactory.createForClass(Comments);
+export const CommentsSchema = SchemaFactory.createForClass(Comments);
