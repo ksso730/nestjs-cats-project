@@ -1,4 +1,3 @@
-import { AuthService } from '../../auth/auth.service';
 import { CatsRepository } from '../cats.repository';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CatRequestDto } from '../dtos/cats.request.dto';
@@ -39,7 +38,7 @@ export class CatsService {
   }
 
   async getAllCat() {
-    const allCat = await this.catsRepository.getAllCat();
+    const allCat = await this.catsRepository.findAll();
     const readOnlyCats = allCat.map((cat) => cat.readOnlyData);
     return readOnlyCats;
   }
