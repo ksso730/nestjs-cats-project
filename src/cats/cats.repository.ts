@@ -1,4 +1,4 @@
-import { CatRequestDto } from './dto/cats.request.dto';
+import { CatRequestDto } from './dtos/cats.request.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -33,5 +33,9 @@ export class CatsRepository {
     const newCat = await cat.save();
     console.log(newCat);
     return newCat.readOnlyData;
+  }
+
+  async getAllCat(): Promise<Array<Cat>> {
+    return this.catModel.find();
   }
 }
